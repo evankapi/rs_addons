@@ -11,9 +11,8 @@
   <buildtool_depend>catkin</buildtool_depend>
 
   <depend>robosherlock</depend>
-  <depend>robosherlock_msgs</depend>
 
-<export>
-</export>
+  <export>
+  </export>
 
 </package>

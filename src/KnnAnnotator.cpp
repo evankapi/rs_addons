@@ -62,7 +62,11 @@ public:
   KnnAnnotator(): DrawingAnnotator(__func__)
   {}
 
-
+  TyErrorId reconfigure()
+  {
+     outInfo("Reconfigure in KNN got called");
+     return UIMA_ERR_NONE;
+  }
 
   TyErrorId initialize(AnnotatorContext &ctx)
   {

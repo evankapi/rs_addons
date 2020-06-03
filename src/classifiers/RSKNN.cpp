@@ -228,11 +228,6 @@ void RSKNN::annotate_hypotheses(uima::CAS &tcas, std::string class_name, std::st
   classResult.classifier("k-Nearest Neighbor");
   classResult.featurename(feature_name);
   classResult.source.set("Knn");
-  rs::ClassConfidence confidence = rs::create<rs::ClassConfidence>(tcas);
-  confidence.score.set(confi);
-  confidence.name.set(class_name);
-  classResult.confidences.set({confidence});
-
   if(feature_name == "BVLC_REF") {
     classResult.classification_type("INSTANCE");
   }

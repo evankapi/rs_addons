@@ -20,11 +20,6 @@ find_package(aruco QUIET)
 find_package(MPI QUIET)
 find_package(RapidJSON REQUIRED) 
 
-find_package(Boost REQUIRED COMPONENTS python numpy)
-find_package(PythonLibs REQUIRED)
-include_directories(${PYTHON_INCLUDE_DIRS})
-
-
 if(Caffe_FOUND)
     add_definitions(-DWITH_CAFFE)
     message(STATUS "OPTIONAL MODULE Caffe FOUND")
@@ -62,7 +57,7 @@ find_include_dirs(RS_ADDONS_INCLUDE_DIRS_LIST)
 
 catkin_package(
     #INCLUDE_DIRS ${RS_ADDONS_INCLUDE_DIRS_LIST}
-    #LIBRARIES ${RS_LIBS}
+    LIBRARIES rs_classifiers
     CATKIN_DEPENDS robosherlock
     #CFG_EXTRAS ${PROJECT_NAME}_config.cmake
     )
@@ -70,7 +65,6 @@ catkin_package(
 include_directories(
     ${RapidJSON_INCLUDE_DIRS}
     ${RS_ADDONS_INCLUDE_DIRS_LIST}
-    ${Boost_INCLUDE_DIRS}
     ${catkin_INCLUDE_DIRS}
     )
 
@@ -88,8 +82,6 @@ find_additional_files()
 #If you want to divide your projects into subprojects include the subdirectories
 #each containing a CMakeLists.txt here
 #add_subdirectory(src/xxx)
-
-catkin_python_setup()
 
 if(simtrack_nodes_FOUND)
     rs_add_library(rs_simtrack src/SimtrackDetection.cpp)
@@ -175,32 +167,5 @@ target_link_libraries(rs_classifyOfflineAnnotator rs_classifiers
     ${CATKIN_LIBRARIES}
     ${OpenCV_LIBRARIES}
     ${Boost_LIBRARIES})
-
-rs_add_library(rs_ssdDetectionAnnotator src/SSDDetectionAnnotator.cpp)
-target_link_libraries(rs_ssdDetectionAnnotator
-    ${CATKIN_LIBRARIES}
-    ${OpenCV_LIBRARIES}
-    boost_numpy)
-
-rs_add_library(rs_fasterRCNNDetectionAnnotator src/FasterRCNNDetectionAnnotator.cpp)
-target_link_libraries(rs_fasterRCNNDetectionAnnotator
-    ${CATKIN_LIBRARIES}
-    ${OpenCV_LIBRARIES}
-    boost_numpy)
-
-rs_add_library(rs_fcisInstanceSegmentationAnnotator src/FCISInstanceSegmentationAnnotator.cpp)
-target_link_libraries(rs_fcisInstanceSegmentationAnnotator
-    ${CATKIN_LIBRARIES}
-    ${OpenCV_LIBRARIES}
-    boost_numpy)
-
-rs_add_library(rs_maskRCNNInstanceSegmentationAnnotator src/MaskRCNNInstanceSegmentationAnnotator.cpp)
-target_link_libraries(rs_maskRCNNInstanceSegmentationAnnotator
-    ${CATKIN_LIBRARIES}
-    ${OpenCV_LIBRARIES}
-    boost_numpy)
-
-# download and install trained data
-add_custom_target(install_trained_data ALL COMMAND ${PROJECT_SOURCE_DIR}/scripts/install_trained_data.py)
 
 add_subdirectory(src/annotators)

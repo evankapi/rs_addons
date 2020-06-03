@@ -4,13 +4,27 @@ annotator:
 capabilities:
   inputs: ['rs.scene.MergedHypothesis', 'rs.annotation.Features']
   outputs: 
-    - rs.annotation.Classification: [CupEcoOrange, EdekaRedBowl, KoellnMuesliKnusperHonigNuss, BluePlasticSpoon, WeideMilchSmall]
-    #- rs.annotation.Classification: [CupEcoOrange, EdekaRedBowl, KoellnMuesliKnusperHonigNuss, BluePlasticSpoon, WeideMilchSmall]
-    # rs.annotation.Classification: [CupEcoOrange,RedMetalPlateWhiteSpeckles,BluePlasticFork,BluePlasticKnife,RedPlasticKnife,BlueMetalPlateWhiteSpeckles,SiggBottle,ElBrygCoffee,KelloggsCornFlakes,ReineButterMilch,PfannerPfirsichIcetea,VollMilch,SojaMilch,MeerSalz]
-    # - rs.annotation.Classification: [WhiteCeramicIkeaBowl, KoellnMuesliKnusperHonigNuss, AlbiHimbeerJuice, BluePlasticKnife, BluePlasticSpoon, LargeGreySpoon, RedPlasticKnife, SlottedSpatula]
+#    - rs.annotation.Classification: [CupEcoOrange, EdekaRedBowl, KoellnMuesliKnusperHonigNuss, BluePlasticSpoon, WeideMilchSmall]
+    - rs.annotation.Classification: [BaleaReinigungsmilchVital, DenkMitGeschirrReinigerNature, DMRoteBeteSaftBio, GarnierMineralUltraDry]
 parameters:
   feature_descriptor_type: BVLC_REF  # for now these are BVLC_REF and VFH
   class_label_mapping: extracted_feats/BVLC_REF_ClassLabel_ijrr_objs.txt
   default_k: 5
   set_mode: CL # CL|GT CL-for adding Classification results; use classifier to semi-automate adding GT to data
   training_data: extracted_feats/BVLC_REF_data_ijrr_objs.yaml
+reconfiguration:
+  setup_one:
+    capabilities:
+      - rs.annotation.Classification: [Banana, Magico_Kaffe_typ_Family_Cappuccino]
+
+    parameters:
+      class_label_mapping: extracted_feats/BVLC_REF_ClassLabel_split1.txt
+      training_data: extracted_feats/BVLC_REF_data_split1.yaml
+
+  setup_two:
+    capabilities:
+      - rs.annotation.Classification: [Extra_Professional_White_Citrus, Tasse]
+
+    parameters:
+      class_label_mapping: extracted_feats/BVLC_REF_ClassLabel_split2.txt
+      training_data: extracted_feats/BVLC_REF_data_split2.yaml
